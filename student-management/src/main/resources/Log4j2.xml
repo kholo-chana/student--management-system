@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss} [%-6p] %C{1}.%M(%F:%L) – %m%n</Property>
+        <Property name="APP_LOG_ROOT">/logs/test</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+        </Console>
+
+        <RollingFile name="studentsinfo"
+                     fileName="${APP_LOG_ROOT}/info.log"
+                     filePattern="${APP_LOG_ROOT}/info.%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+
+        </RollingFile>
+        <RollingFile name="studentserror"
+                     fileName="${APP_LOG_ROOT}/error.log"
+                     filePattern="${APP_LOG_ROOT}/error.%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+
+        </RollingFile>
+        <RollingFile name="studentdebug"
+                     fileName="${APP_LOG_ROOT}/debug.log"
+                     filePattern="${APP_LOG_ROOT}/debug.%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+
+        <Logger name="com.kholofelo" additivity="false">
+            <AppenderRef ref="studentsinfo" />
+            <AppenderRef ref="studentserror" />
+            <AppenderRef ref="console" />
+        </Logger>
+
+        <Root level="trace">
+            <AppenderRef ref="console" />
+        </Root>
+    </Loggers>
+</Configuration>
